@@ -38,6 +38,13 @@ app.post('/chats/:id', (req, res) => {
     })
 })
 
+const chatSubscription = {};
+
 io.on('connection', client => {
-    console.log('Client verbunden');
+    client.on('join', data => {
+        if (chatSubscription[data.id] == null) {
+            chatSubscription[data.id] = [];
+        }
+        chatSubscription[data.id].push(client);
+    })
 })

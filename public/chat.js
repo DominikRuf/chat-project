@@ -27,7 +27,12 @@ async function addChatMessage() {
     await fetchChatMessages();
 }
 
-window.addEventListener('load', fetchChatMessages);
+window.addEventListener('load', () => {
+    const socket = io();
+    socket.on('connect', () => {
+        console.log('Verbindung aufgebaut');
+    })
+});
 document.querySelector('#chat-form').addEventListener('submit', event => {
     event.preventDefault();
     addChatMessage();
