@@ -30,7 +30,12 @@ async function addChatMessage() {
 window.addEventListener('load', () => {
     const socket = io();
     socket.on('connect', () => {
-        console.log('Verbindung aufgebaut');
+        socket.emit('join', {
+            id: '456'
+        });
+    });
+    socket.on('refresh', () => {
+        fetchChatMessages();
     })
 });
 document.querySelector('#chat-form').addEventListener('submit', event => {

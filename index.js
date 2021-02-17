@@ -34,6 +34,13 @@ app.post('/chats/:id', (req, res) => {
             res.status(500).send('Error')
         } else {
             res.send('OK')
+            if (chatSubscription[req.params.id] != null) {
+                chatSubscription[req.params.id].forEach(client => {
+                    client.emit('refresh', {
+                        id: req.params.id
+                    });
+                });
+            }
         }
     })
 })
